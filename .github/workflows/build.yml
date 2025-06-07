@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
       - name: Set up Python
         uses: actions/setup-python@v4
@@ -19,11 +19,14 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo apt update
-          sudo apt install -y build-essential git zip unzip openjdk-17-jdk python3-pip
+          sudo apt-get update
+          sudo apt-get install -y zip unzip openjdk-17-jdk python3-pip git
           pip install --upgrade pip
-          pip install cython virtualenv
-          pip install buildozer
+          pip install Cython virtualenv buildozer
+
+      - name: Accept Android SDK licenses
+        run: |
+          yes | sdkmanager --licenses || true
 
       - name: Build APK
         run: |
